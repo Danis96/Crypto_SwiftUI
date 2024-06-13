@@ -23,18 +23,11 @@ struct HomeView: View {
             VStack {
                 header
                 
-                HStack {
-                    Text("Coin")
-                    Spacer()
-                    if showPortfolio {
-                        Text("Holdings")
-                    }
-                    Text("Price")
-                        .frame(width: UIScreen.main.bounds.width / 3, alignment: .trailing)
-                }
-                .font(.caption)
-                .foregroundStyle(Color.theme.secondarytext)
-                .padding(.horizontal)
+                HomeStatView(showPortfolio: $showPortfolio)
+                
+                SearchBarComponent(textFieldText: $homeVM.searchText)
+                
+                nameColumns
                 
                 if !showPortfolio {
                     allCoinList
@@ -100,6 +93,21 @@ extension HomeView {
             }
         }
         .listStyle(.plain)
+    }
+    
+    private var nameColumns: some View {
+        HStack {
+            Text("Coin")
+            Spacer()
+            if showPortfolio {
+                Text("Holdings")
+            }
+            Text("Price")
+                .frame(width: UIScreen.main.bounds.width / 3, alignment: .trailing)
+        }
+        .font(.caption)
+        .foregroundStyle(Color.theme.secondarytext)
+        .padding(.horizontal)
     }
     
 }
