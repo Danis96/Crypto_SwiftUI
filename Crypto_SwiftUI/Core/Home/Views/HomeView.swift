@@ -10,7 +10,8 @@ import SwiftUI
 struct HomeView: View {
     
     @EnvironmentObject var homeVM: HomeViewModel
-    @State private var showPortfolio: Bool = false
+    @State private var showPortfolio: Bool = false // - right animation
+    @State private var showPortfolioView: Bool = false // - open sheet
     
     var body: some View {
         ZStack {
@@ -18,6 +19,10 @@ struct HomeView: View {
             // background layer
             Color.theme.background
                 .ignoresSafeArea()
+                .sheet(isPresented: $showPortfolioView, content: {
+                    PortfolioView()
+                        .environmentObject(homeVM)
+                })
             
             // content layer
             VStack {
@@ -56,8 +61,13 @@ extension HomeView {
     private var header: some View {
         HStack {
             CircleButtonView(iconName: showPortfolio ? "plus" : "info")
-                .background(CircleButtonAnimationView(animate: $showPortfolio))
                 .animation(.none)
+                .onTapGesture {
+                    if showPortfolio {
+                        showPortfolioView.toggle()
+                    }
+                }
+                .background(CircleButtonAnimationView(animate: $showPortfolio))
             Spacer()
             Text(showPortfolio ? "Portfolio" : "Live Prices")
                 .font(.headline)
@@ -84,7 +94,7 @@ extension HomeView {
         }
         .listStyle(.plain)
     }
-
+    
     private var portfolioCoinList: some View {
         List {
             ForEach(homeVM.portfolioCoins) { coin in
@@ -97,17 +107,56 @@ extension HomeView {
     
     private var nameColumns: some View {
         HStack {
-            Text("Coin")
+            HStack(spacing: 4) {
+                Text("Coin")
+                Image(systemName: "chevron.down")
+                    .opacity((homeVM.sortOptions == .rank || homeVM.sortOptions == .rankReversed) ? 1.0 : 0.0)
+                    .rotationEffect(Angle(degrees: homeVM.sortOptions == .rank ? 180 : 0))
+            }
+            .onTapGesture {
+                withAnimation {
+                    homeVM.sortOptions = homeVM.sortOptions == .rank ? .rankReversed : .rank
+                }
+            }
             Spacer()
             if showPortfolio {
-                Text("Holdings")
+                HStack(spacing: 4) {
+                    Text("Holdings")
+                    Image(systemName: "chevron.down")
+                        .opacity((homeVM.sortOptions == .holdings || homeVM.sortOptions == .holdingsReversed) ? 1.0 : 0.0)
+                        .rotationEffect(Angle(degrees: homeVM.sortOptions == .holdings ? 180 : 0))
+                }
+                .onTapGesture {
+                    withAnimation {
+                        homeVM.sortOptions = homeVM.sortOptions == .holdings ? .holdingsReversed : .holdings
+                    }
+                }
             }
-            Text("Price")
+                HStack(spacing: 4) {
+                    Text("Price")
+                    Image(systemName: "chevron.down")
+                        .opacity((homeVM.sortOptions == .price || homeVM.sortOptions == .priceReversed) ? 1.0 : 0.0)
+                        .rotationEffect(Angle(degrees: homeVM.sortOptions == .price ? 180 : 0))
+                }
                 .frame(width: UIScreen.main.bounds.width / 3, alignment: .trailing)
+                .onTapGesture {
+                    withAnimation {
+                        homeVM.sortOptions = homeVM.sortOptions == .price ? .priceReversed : .price
+                    }
+                }
+                
+                Button(action: {
+                    withAnimation(.linear(duration: 2.0)) {
+                        homeVM.reloadData()
+                    }
+                }, label: {
+                    Image(systemName: "goforward")
+                })
+                .rotationEffect(Angle(degrees: homeVM.isLoading ? 360 : 0), anchor: .center)
+            }
+                .font(.caption)
+                .foregroundStyle(Color.theme.secondarytext)
+                .padding(.horizontal)
         }
-        .font(.caption)
-        .foregroundStyle(Color.theme.secondarytext)
-        .padding(.horizontal)
     }
-    
-}
+
