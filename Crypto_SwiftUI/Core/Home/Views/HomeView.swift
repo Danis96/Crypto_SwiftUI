@@ -13,6 +13,9 @@ struct HomeView: View {
     @State private var showPortfolio: Bool = false // - right animation
     @State private var showPortfolioView: Bool = false // - open sheet
     
+    @State private var selectedCoin: CoinModel?
+    @State private var showDetailView: Bool = false
+    
     var body: some View {
         ZStack {
             
@@ -45,6 +48,11 @@ struct HomeView: View {
                 Spacer(minLength: 0)
             }
         }
+        .background(
+            navigationDestination(isPresented: $showDetailView, destination: {
+                DetailLoadingView(coin: $selectedCoin)
+            })
+        )
     }
 }
 
@@ -90,6 +98,11 @@ extension HomeView {
             ForEach(homeVM.allCoins) { coin in
                 CoinRowView(coin: coin, showHoldingsColumn: false)
                     .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
+                    .onTapGesture {
+                        selectedCoin = coin
+                        showDetailView.toggle()
+                    }
+                
             }
         }
         .listStyle(.plain)
@@ -100,6 +113,10 @@ extension HomeView {
             ForEach(homeVM.portfolioCoins) { coin in
                 CoinRowView(coin: coin, showHoldingsColumn: true)
                     .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 10))
+                    .onTapGesture {
+                        selectedCoin = coin
+                        showDetailView.toggle()
+                    }
             }
         }
         .listStyle(.plain)
@@ -159,4 +176,3 @@ extension HomeView {
                 .padding(.horizontal)
         }
     }
-

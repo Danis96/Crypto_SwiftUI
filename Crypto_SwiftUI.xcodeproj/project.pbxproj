@@ -38,6 +38,7 @@
 		43D054822C20114C00818102 /* PortfolioContainer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 43D054802C20114C00818102 /* PortfolioContainer.xcdatamodeld */; };
 		43D054842C2011B200818102 /* PortfolioDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D054832C2011B200818102 /* PortfolioDataService.swift */; };
 		43D054862C21797400818102 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D054852C21797400818102 /* HapticManager.swift */; };
+		43D0548C2C21CF8100818102 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D0548B2C21CF8100818102 /* DetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +74,7 @@
 		43D054812C20114C00818102 /* PortfolioContainer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PortfolioContainer.xcdatamodel; sourceTree = "<group>"; };
 		43D054832C2011B200818102 /* PortfolioDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDataService.swift; sourceTree = "<group>"; };
 		43D054852C21797400818102 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		43D0548B2C21CF8100818102 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				43D0544A2C18CFD300818102 /* Components */,
+				43D054872C21CEFE00818102 /* Detail */,
 				43D054452C18CE3000818102 /* Home */,
 			);
 			path = Core;
@@ -236,6 +239,30 @@
 			path = CoinImageView;
 			sourceTree = "<group>";
 		};
+		43D054872C21CEFE00818102 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				43D0548A2C21CF5700818102 /* ViewModel */,
+				43D054892C21CF4E00818102 /* Views */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		43D054892C21CF4E00818102 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				43D0548B2C21CF8100818102 /* DetailView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		43D0548A2C21CF5700818102 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -319,6 +346,7 @@
 				43D054602C19E48800818102 /* NetworkManager.swift in Sources */,
 				43D054562C197CDB00818102 /* CoinRowView.swift in Sources */,
 				43D054342C187B9100818102 /* Crypto_SwiftUIApp.swift in Sources */,
+				43D0548C2C21CF8100818102 /* DetailView.swift in Sources */,
 				43D0546B2C1AC80600818102 /* SearchBarComponent.swift in Sources */,
 				43D0545A2C19920E00818102 /* HomeViewModel.swift in Sources */,
 				43D054692C1A48CD00818102 /* LocalFileManager.swift in Sources */,
